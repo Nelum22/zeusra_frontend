@@ -1,8 +1,24 @@
-import React from 'react'
+import React ,{useState} from 'react'
 import Navbar from '../components/Navigation'
 
-
 export default function Login() {
+const[email, setEmail] = useState('')
+const[password , setPassword] = useState('')
+
+const handleClik=(e)=>{
+  e.preventDefault()
+  const user = {email, password}
+  console.log(user)
+  fetch("http://localhost:8080/user/login" ,{
+    method: "POST" ,
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(user)
+
+}).then(()=>{
+  console.log("Login Succesfully")
+  })
+}
+
   return (
     <>
      <Navbar/>
@@ -32,6 +48,8 @@ export default function Login() {
                   autoComplete="email"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={email}
+                  onChange={(e)=>setEmail(e.target.value)}
                 />
               </div>
             </div>
@@ -55,12 +73,14 @@ export default function Login() {
                   autoComplete="current-password"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={password}
+                  onChange={(e)=>setPassword(e.target.value)}
                 />
               </div>
             </div>
 
             <div>
-              <button
+              <button variant=" cintained" onClick={handleClik}
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
@@ -80,4 +100,3 @@ export default function Login() {
     </>
   )
 }
-
